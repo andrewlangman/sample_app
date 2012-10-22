@@ -81,6 +81,8 @@ set helplang=en
 set hidden
 set history=500
 set ignorecase
+set iminsert=0
+set imsearch=0
 set incsearch
 set laststatus=2
 set listchars=tab:»-,trail:·,eol:¶
@@ -100,7 +102,7 @@ set viminfo='100,f1
 set whichwrap=b,s,<,>,[,],h,l
 set wildmenu
 set wildmode=list:longest
-set window=32
+set window=24
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
@@ -109,22 +111,22 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 app/models/user.rb
-badd +0 app/views/layouts/application.html.erb
-badd +0 app/views/users/show.html.erb
-badd +0 app/controllers/static_pages_controller.rb
-badd +0 app/controllers/users_controller.rb
-badd +0 app/helpers/application_helper.rb
-badd +0 app/helpers/users_helper.rb
-badd +0 spec/factories.rb
-badd +0 spec/helpers/application_helper_spec.rb
-badd +0 spec/models/user_spec.rb
-badd +0 spec/requests/static_pages_spec.rb
-badd +0 spec/requests/user_pages_spec.rb
-badd +0 spec/support/utilities.rb
-badd +0 app/assets/stylesheets/custom.css.scss
-args app/models/user.rb app/views/layouts/application.html.erb app/views/users/show.html.erb app/controllers/static_pages_controller.rb app/controllers/users_controller.rb app/helpers/application_helper.rb app/helpers/users_helper.rb spec/factories.rb spec/helpers/application_helper_spec.rb spec/models/user_spec.rb spec/requests/static_pages_spec.rb spec/requests/user_pages_spec.rb spec/support/utilities.rb app/assets/stylesheets/custom.css.scss
-edit app/models/user.rb
+badd +1 app/controllers/static_pages_controller.rb
+badd +1 spec/requests/static_pages_spec.rb
+badd +1 app/helpers/application_helper.rb
+badd +24 app/assets/stylesheets/custom.css.scss
+badd +10 spec/support/utilities.rb
+badd +16 app/controllers/users_controller.rb
+badd +35 spec/requests/user_pages_spec.rb
+badd +1 spec/helpers/application_helper_spec.rb
+badd +1 app/models/user.rb
+badd +83 spec/models/user_spec.rb
+badd +1 app/views/layouts/application.html.erb
+badd +13 app/views/users/show.html.erb
+badd +1 spec/factories.rb
+badd +10 app/helpers/users_helper.rb
+silent! argdel *
+edit app/views/users/show.html.erb
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -154,7 +156,7 @@ setlocal cinoptions=
 setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
 setlocal comments=:#
-setlocal commentstring=#\ %s
+setlocal commentstring=<%#%s%>
 setlocal complete=.,w,b,u,t,i
 setlocal concealcursor=
 setlocal conceallevel=0
@@ -169,10 +171,10 @@ setlocal define=
 setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
-setlocal errorformat=%+E%f:%l:\ parse\ error,%W%f:%l:\ warning:\ %m,%E%f:%l:in\ %*[^:]:\ %m,%E%f:%l:\ %m,%-C%tfrom\ %f:%l:in\ %.%#,%-Z%tfrom\ %f:%l,%-Z%p^,%-G%.%#
+setlocal errorformat=
 setlocal expandtab
-if &filetype != 'ruby'
-setlocal filetype=ruby
+if &filetype != 'eruby'
+setlocal filetype=eruby
 endif
 setlocal foldcolumn=0
 setlocal nofoldenable
@@ -189,12 +191,12 @@ setlocal formatexpr=
 setlocal formatoptions=croql
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal grepprg=
-setlocal iminsert=2
-setlocal imsearch=2
+setlocal iminsert=0
+setlocal imsearch=0
 setlocal include=^\\s*\\<\\(load\\|w*require\\)\\>
 setlocal includeexpr=substitute(substitute(v:fname,'::','/','g'),'$','.rb','')
-setlocal indentexpr=GetRubyIndent()
-setlocal indentkeys=0{,0},0),0],!^F,o,O,e,=end,=elsif,=when,=ensure,=rescue,==begin,==end
+setlocal indentexpr=GetErubyIndent()
+setlocal indentkeys=o,O,*<Return>,<>>,{,},0),0],o,O,!^F,=end,=else,=elsif,=rescue,=ensure,=when
 setlocal noinfercase
 setlocal iskeyword=@,48-57,_,192-255
 setlocal keywordprg=ri\ -T
@@ -202,8 +204,8 @@ set linebreak
 setlocal linebreak
 setlocal nolisp
 setlocal nolist
-setlocal makeprg=ruby\ -w\ $*
-setlocal matchpairs=(:),{:},[:]
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:],<:>
 setlocal modeline
 setlocal modifiable
 setlocal nrformats=octal,hex
@@ -217,7 +219,7 @@ NOTE:\ Gem.all_partials\ is\ deprecated\ with\ no\ replacement.\ It\ will\ be\ r
 Gem.all_partials\ called\ from\ ~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/site_ruby/1.9.1/rubygems.rb:261.\
 NOTE:\ Gem.all_partials\ is\ deprecated\ with\ no\ replacement.\ It\ will\ be\ removed\ on\ or\ after\ 2011-10-01.\
 Gem.all_partials\ called\ from\ ~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/site_ruby/1.9.1/rubygems.rb:261.\
-/home/andrew/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/site_ruby/1.9.1,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/site_ruby/1.9.1/i686-linux,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/site_ruby,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/vendor_ruby/1.9.1,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/vendor_ruby/1.9.1/i686-linux,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/vendor_ruby,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/1.9.1,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/1.9.1/i686-linux,~/.rvm/gems/ruby-1.9.2-p320/gems/actionmailer-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/actionpack-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/activemodel-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/activerecord-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/activeresource-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/activesupport-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/addressable-2.3.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/annotate-2.5.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/arel-3.0.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/bcrypt-ruby-3.0.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/bootstrap-sass-2.0.4.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/builder-3.0.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/capybara-1.1.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/childprocess-0.3.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/coffee-rails-3.2.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/coffee-script-2.2.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/coffee-script-source-1.3.3/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/diff-lcs-1.1.3/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/erubis-2.7.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/excon-0.16.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/execjs-1.4.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/factory_girl-4.1.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/factory_girl_rails-4.1.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/ffi-1.1.5/ext,~/.rvm/gems/ruby-1.9.2-p320/gems/ffi-1.1.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/heroku-2.30.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/heroku-api-0.3.4/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/hike-1.2.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/i18n-0.6.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/journey-1.0.4/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/jquery-rails-2.0.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/jquery-rails-2.1.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/json-1.7.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/launchy-2.1.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/libwebsocket-0.1.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/mail-2.4.4/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/mime-types-1.19/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/multi_json-1.3.6/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/netrc-0.7.7/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/nokogiri-1.5.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/polyglot-0.3.3/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rack-1.4.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rack-cache-1.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rack-ssl-1.3.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rack-test-0.6.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rails-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/railties-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rake-0.9.2.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rdoc-3.12/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rest-client-1.6.7/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rspec-2.10.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rspec-core-2.10.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rspec-expectations-2.10.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rspec-mocks-2.10.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rspec-rails-2.10.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rubyzip-0.9.9/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/sass-3.2.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/sass-rails-3.2.4/lib,~/.rvm/gems/ruby-
+/home/andrew/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/site_ruby/1.9.1,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/site_ruby/1.9.1/i686-linux,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/site_ruby,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/vendor_ruby/1.9.1,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/vendor_ruby/1.9.1/i686-linux,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/vendor_ruby,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/1.9.1,~/.rvm/rubies/ruby-1.9.2-p320/lib/ruby/1.9.1/i686-linux,~/.rvm/gems/ruby-1.9.2-p320/gems/actionmailer-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/actionpack-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/activemodel-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/activerecord-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/activeresource-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/activesupport-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/addressable-2.3.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/arel-3.0.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/bootstrap-sass-2.0.4.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/builder-3.0.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/capybara-1.1.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/childprocess-0.3.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/coffee-rails-3.2.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/coffee-script-2.2.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/coffee-script-source-1.3.3/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/diff-lcs-1.1.3/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/erubis-2.7.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/excon-0.16.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/execjs-1.4.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/ffi-1.1.5/ext,~/.rvm/gems/ruby-1.9.2-p320/gems/ffi-1.1.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/heroku-2.30.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/heroku-api-0.3.4/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/hike-1.2.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/i18n-0.6.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/journey-1.0.4/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/jquery-rails-2.0.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/jquery-rails-2.1.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/json-1.7.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/launchy-2.1.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/libwebsocket-0.1.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/mail-2.4.4/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/mime-types-1.19/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/multi_json-1.3.6/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/netrc-0.7.7/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/nokogiri-1.5.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/polyglot-0.3.3/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rack-1.4.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rack-cache-1.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rack-ssl-1.3.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rack-test-0.6.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rails-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/railties-3.2.8/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rake-0.9.2.2/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rdoc-3.12/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rest-client-1.6.7/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rspec-2.10.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rspec-core-2.10.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rspec-expectations-2.10.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rspec-mocks-2.10.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rspec-rails-2.10.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/rubyzip-0.9.9/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/sass-3.2.1/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/sass-rails-3.2.4/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/sass-rails-3.2.5/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/selenium-webdriver-2.25.0/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/sprockets-2.1.3/lib,~/.rvm/gems/ruby-1.9.2-p320/gems/sqlite3-1.3.5/lib,~/.rvm/gems/ruby-1.9.
 setlocal nopreserveindent
 setlocal nopreviewwindow
 setlocal quoteescape=\\
@@ -238,8 +240,8 @@ setlocal statusline=
 setlocal suffixesadd=.rb
 setlocal swapfile
 setlocal synmaxcol=3000
-if &syntax != 'ruby'
-setlocal syntax=ruby
+if &syntax != 'eruby'
+setlocal syntax=eruby
 endif
 setlocal tabstop=2
 setlocal tags=
@@ -248,13 +250,14 @@ setlocal thesaurus=
 setlocal noundofile
 setlocal nowinfixheight
 setlocal nowinfixwidth
-setlocal wrap
+set nowrap
+setlocal nowrap
 setlocal wrapmargin=0
-let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+let s:l = 13 - ((12 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+13
 normal! 0
 tabnext 1
 if exists('s:wipebuf')
